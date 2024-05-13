@@ -1,0 +1,51 @@
+{
+    "name": "sebastianknott/test-utils",
+    "type": "library",
+    "description": "Some classes i like to use for testing",
+    "license": "GPL-3.0",
+    "require": {
+        "php": "^8.3",
+        "phake/phake": "^4.5",
+        "mockery/mockery": "^1.6",
+        "phpunit/phpunit": "^11.1",
+        "hamcrest/hamcrest-php": "^2.0",
+        "sebastianknott/hamcrest-object-accessor": "^2.0",
+        "fakerphp/faker": "^1.9",
+        "infection/infection": ">0.28.0",
+        "phpspec/prophecy": "^1.19"
+    },
+    "require-dev": {
+        "sebastianknott/coding-standard": "^2.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Sebastianknott\\TestUtils\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Sebastianknott\\TestUtils\\Test\\": "test/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Sebastian Knott",
+            "email": "sebastian@sebastianknott.de"
+        }
+    ],
+    "config": {
+        "allow-plugins": {
+            "infection/extension-installer": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    },
+    "scripts": {
+        "cs": "phpcs --standard=SebastianKnott -s --colors src",
+        "cs-fix": "phpcbf --standard=SebastianKnott src",
+        "stan": "phpstan analyse -c config/phpstan.neon.dist src",
+        "style": ["@cs", "@stan"],
+        "fix": ["@cs-fix"],
+        "phpunit": "phpunit",
+        "infection": "infection -n --threads=4 --no-progress",
+    }
+}

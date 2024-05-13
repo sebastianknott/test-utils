@@ -1,0 +1,9 @@
+/vendor/
+/.idea/
+/dist/*
+!/dist/.keep
+composer.lock
+
+/vendor-bin/**/vendor/
+/vendor-bin/**/composer.lock
+
