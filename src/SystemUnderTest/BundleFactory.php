@@ -2,50 +2,45 @@
 
 declare(strict_types=1);
 
-namespace SebastianKnott\TestUtils\SystemUnderTest;
+namespace Sebastianknott\TestUtils\SystemUnderTest;
 
-use Closure;
-use Mockery;
-use Phake;
 use ReflectionClass;
+use Sebastianknott\TestUtils\SystemUnderTest\MockFactory\MockeryFactory;
+use Sebastianknott\TestUtils\SystemUnderTest\MockFactory\MockTypeEnum;
+use Sebastianknott\TestUtils\SystemUnderTest\MockFactory\PhakeFactory;
 
+/**
+ * This class is responsible for building a system under test with all its dependencies mocked.
+ */
 class BundleFactory
 {
     /**
-     * Builds a subject with mocked constructor dependencies with Mockery.
+     * This method will build a system under test with all its dependencies mocked. You can supply prebuilt
+     * parameters for the sut and choose which mock framework to use.
      *
+     * @param class-string<TSut> $className Fully qualified class name of the system under test
+     * @param array<non-empty-string,object> $prebuildParameters Prebuilt parameters for the system under test
+     *                                                           it has to be an associative array with the parameter
+     *                                                           name of the sut constructor as key and the prebuilt
+     *                                                           parameter as value.
+     * @param MockTypeEnum $type The type of mock framework to use. Will default to MockTypeEnum::MOCKERY
      *
+     * @phpstan-template TSut of object
+     * @phpstan-param class-string<TSut> $className
+     * @phpstan-param array<non-empty-string,object> $prebuildParameters
+     *
+     * @phpstan-return Bundle<non-empty-string,TSut,object>
      */
-    public function buildSutWithMockery(string $className): object
-    {
-        $buildFunction = static function ($className): object {
-            return Mockery::mock($className);
+    public function build(
+        string $className,
+        array $prebuildParameters = [],
+        MockTypeEnum $type = MockTypeEnum::MOCKERY,
+    ): Bundle {
+        $factory = match ($type) {
+            MockTypeEnum::MOCKERY => new MockeryFactory(),
+            MockTypeEnum::PHAKE => new PhakeFactory(),
         };
 
-        return $this->generateSubjectByBuildFunction($className, $buildFunction);
-    }
-
-    /**
-     * Builds a subject with mocked constructor dependencies with Mockery.
-     *
-     *
-     */
-    public function buildSutWithPhake(string $className): object
-    {
-        $buildFunction = static function ($className): object {
-            return Phake::mock($className);
-        };
-
-        return $this->generateSubjectByBuildFunction($className, $buildFunction);
-    }
-
-    /**
-     * Generates instance of class. Uses buildFunction to generate constructor parameters.
-     *
-     *
-     */
-    private function generateSubjectByBuildFunction(string $className, Closure $buildFunction): Bundle
-    {
         $reflection  = new ReflectionClass($className);
         $constructor = $reflection->getConstructor();
 
@@ -56,14 +51,20 @@ class BundleFactory
         $parametersInstancesWithName = [];
         $parametersInstances         = [];
         foreach ($parameters ?? [] as $parameter) {
-            $parameterClass  = $parameter->getClass();
-            $parameterName   = $parameter->getName();
-            $mockedParameter = $buildFunction($parameterClass->getName());
+            $parameterClass = $parameter->getType();
+            $parameterName  = $parameter->getName();
+
+            if (array_key_exists($parameterName, $prebuildParameters)) {
+                $mockedParameter = $prebuildParameters[$parameterName];
+            } else {
+                $mockedParameter = $factory->build((string) $parameterClass);
+            }
 
             $parametersInstancesWithName[$parameterName] = $mockedParameter;
             $parametersInstances[]                       = $mockedParameter;
         }
 
+        /** @var TSut $systemUnderTestSubject */
         $systemUnderTestSubject = new $className(...$parametersInstances);
 
         return new Bundle(

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SebastianKnott\TestUtils\TestCase;
+namespace Sebastianknott\TestUtils\TestCase;
 
 use Composer\Autoload\ClassLoader;
 use Faker\Factory;
@@ -10,7 +10,7 @@ use Faker\Generator;
 use Mockery;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
-use SebastianKnott\TestUtils\SystemUnderTest\BundleFactory;
+use Sebastianknott\TestUtils\SystemUnderTest\BundleFactory;
 
 class TestToolsCase extends TestCase
 {
@@ -18,12 +18,10 @@ class TestToolsCase extends TestCase
 
     /**
      * A ready-made faker instance for your unit tests.
-     *
      */
     public static Generator $faker;
     /**
      * An instance of my subject factory for easy sut creation and mocking.
-     *
      */
     public static BundleFactory $factory;
 
@@ -41,9 +39,9 @@ class TestToolsCase extends TestCase
         $reflection = new ReflectionClass(ClassLoader::class);
         $vendorDir  = dirname($reflection->getFileName(), 2);
 
-        require_once $vendorDir . 'hamcrest/hamcrest-php/hamcrest/Hamcrest.php';
-        require_once $vendorDir . 'sebastianknott/hamcrest-object-accessor/src/functions.php';
-        require_once $vendorDir . 'mockery/mockery/library/helpers.php';
+        require_once $vendorDir . '/hamcrest/hamcrest-php/hamcrest/Hamcrest.php';
+        require_once $vendorDir . '/sebastianknott/hamcrest-object-accessor/src/functions.php';
+        require_once $vendorDir . '/mockery/mockery/library/helpers.php';
     }
 
     /**

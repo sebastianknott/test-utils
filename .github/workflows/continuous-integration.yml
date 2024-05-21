@@ -1,0 +1,48 @@
+---
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+
+jobs:
+  codestyle:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        composer_parameters: [ '--prefer-lowest', '--prefer-stable' ]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - run: 'composer validate'
+
+      - id: 'determine-composer-cache-directory'
+        run: 'echo "::set-output name=directory::$(composer config cache-dir)"'
+
+      - name: Cache Composer Packages
+        uses: actions/cache@v2
+        with:
+          path: '${{ steps.determine-composer-cache-directory.outputs.directory }}'
+          key: ${{ runner.os }}-${{ hashFiles('**/composer.json') }}-${{ matrix.composer_parameters }}
+          restore-keys: |
+            ${{ runner.os }}
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          tools:  cs2pr, composer
+          ini-values: error_reporting=E_ALL&~E_DEPRECATED&~E_USER_DEPRECATED&~E_STRICT
+        env:
+          fail-fast: true
+
+      - run: |
+          composer update --no-progress --no-suggest ${{ matrix.composer_parameters }}
+          composer show -i
+
+      - run: |
+          set +e
+          composer ci
+          CS_EXIT=$?
+          trap "cs2pr ./tmp/phpcs/checkstyle" EXIT
+          exit $CS_EXIT

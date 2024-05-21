@@ -2,26 +2,32 @@
 
 declare(strict_types=1);
 
-namespace SebastianKnott\TestUtils\SystemUnderTest;
+namespace Sebastianknott\TestUtils\SystemUnderTest;
 
 use ArrayObject;
-use Mockery\MockInterface;
 
 /**
- * @psalm-suppress MissingTemplateParam
+ * @phpstan-template TKey of non-empty-string
+ * @phpstan-template TSut of object
+ * @phpstan-template TValue
+ * @phpstan-extends ArrayObject<TKey,TValue>
  */
 class Bundle extends ArrayObject
 {
     /**
-     * @param array<string,MockInterface>  $parameters
+     * @phpstan-param TSut               $sut
+     * @phpstan-param array<TKey,TValue> $parameters
      */
-    public function __construct(private readonly object $subject, array $parameters)
+    public function __construct(private readonly object $sut, array $parameters)
     {
         parent::__construct($parameters);
     }
 
-    public function getSubject(): object
+    /**
+     * @phpstan-return TSut
+     */
+    public function getSut(): object
     {
-        return $this->subject;
+        return $this->sut;
     }
 }
