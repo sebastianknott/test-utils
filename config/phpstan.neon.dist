@@ -1,0 +1,15 @@
+includes:
+	- ../vendor/sebastianknott/coding-standard/config/phpstan/phpstan.neon.dist
+
+parameters:
+    scanFiles:
+        - ../vendor/hamcrest/hamcrest-php/hamcrest/Hamcrest.php
+        - ../vendor/sebastianknott/hamcrest-object-accessor/src/functions.php
+        - ../vendor/mockery/mockery/library/helpers.php
+    scanDirectories:
+        - ../vendor
+    excludePaths:
+        - ../.git
+        - ../.idea
+        - ../vendor
+    tmpDir: ../tmp
