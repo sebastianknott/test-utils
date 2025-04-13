@@ -15,6 +15,7 @@ class BundleTest extends TestCase
         };
         $bundle = new Bundle($sut, []);
         self::assertSame($sut, $bundle->getSut());
+        self::assertSame($sut, $bundle->sut);
     }
 
     public function testGetParameters(): void

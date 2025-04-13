@@ -2,6 +2,9 @@ includes:
 	- ../vendor/sebastianknott/coding-standard/config/phpstan/phpstan.neon.dist
 
 parameters:
+    paths:
+        - ../src
+        - ../test
     scanFiles:
         - ../vendor/hamcrest/hamcrest-php/hamcrest/Hamcrest.php
         - ../vendor/sebastianknott/hamcrest-object-accessor/src/functions.php
@@ -10,6 +13,7 @@ parameters:
         - ../vendor
     excludePaths:
         - ../.git
-        - ../.idea
         - ../vendor
-    tmpDir: ../tmp
+    tmpDir: ../tmp/phpstan
+    ignoreErrors:
+        - identifier: argument.named

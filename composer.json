@@ -4,20 +4,23 @@
     "description": "Some classes i like to use for testing",
     "license":"GPL-3.0-only",
     "require": {
-        "php": "^8.3",
-        "phake/phake": "^v4.5",
-        "mockery/mockery": "^1.6",
-        "phpunit/phpunit": "^9.5|^10.0|^11.1.3",
+        "php": "^8.4",
+        "phake/phake": "^v4.6.1",
+        "mockery/mockery": "^1.6.11",
+        "phpunit/phpunit": "^9.5|^10.0|^11.0",
         "hamcrest/hamcrest-php": "^2.0",
-        "sebastianknott/hamcrest-object-accessor": "^2.0",
+        "sebastianknott/hamcrest-object-accessor": "^3.0",
         "fakerphp/faker": "^v1.23.1",
-        "infection/infection": ">0.28.0",
-        "phpspec/prophecy": "^v1.19",
-        "brianium/paratest": "^v7.4"
+        "infection/infection": ">=0.29.14",
+        "phpspec/prophecy": "^v1.20.0",
+        "brianium/paratest": "^v7.8.3"
     },
     "require-dev": {
-        "sebastianknott/coding-standard": "^2.1.1",
-        "phpunit/phpunit": "^11.1.3"
+        "sebastianknott/coding-standard": "^2.2.2",
+        "phpunit/phpunit": "^11.5.17",
+        "vimeo/psalm": "^6.10.0",
+        "psalm/plugin-phpunit": "^0.19.5",
+        "lctrs/psalm-psr-container-plugin": "^1.11"
     },
     "autoload": {
         "psr-4": {
@@ -50,6 +53,9 @@
         "infection": "infection -n --threads=4 --no-progress",
         "unit": "paratest",
         "stan": "phpstan analyse -c config/phpstan.neon.dist -v src test",
-        "style": ["@cs", "@stan"]
+        "psalm": "psalm -c config/psalm.xml --threads=$(getconf _NPROCESSORS_ONLN)",
+        "psalm-fix": "psalm -c config/psalm.xml --threads=$(getconf _NPROCESSORS_ONLN) --alter",
+        "style": ["@cs", "@stan", "@psalm"],
+        "style-fix": ["@cs-fix", "@psalm-fix"]
     }
 }

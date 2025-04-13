@@ -30,13 +30,13 @@ $factory = new BundleFactory();
 $bundel = $factory->build(SomeClass::class);
 
 // Get the SUT
-$sut = $bundle->getSut();
+$sut = $bundle->sut;
 // Access the mocked dependencies
-$sut['myDependency']->expects()->someMethod()->once();
+$bundle['myDependency']->expects()->someMethod()->once();
 ```
 ### Type of Mocks
-It supports two types of mocking libraries ([Mockery](https://github.com/mockery/mockery),
-[Phake](https://github.com/phake/phake)) and can be configured to use one of them by passing the respective
+It supports multiple types of mocking libraries ([Mockery](https://github.com/mockery/mockery),
+[Phake](https://github.com/phake/phake), [Prophecy](https://github.com/phpspec/prophecy)) and can be configured to use one of them by passing the respective
 `MockTypeEnum` to `BundleFactory::build`.
 
 ```php
@@ -118,8 +118,7 @@ class SomeTest extends TestToolsCase
         $bundle['myDependency']->expects()
             ->someMethod(stringValue())->andReturn(self::$faker->word());
 
-        $sut = $bundle->getSut();
-        $sut->run();
+        $bundle->sut->run();
     }
 }
 ```
