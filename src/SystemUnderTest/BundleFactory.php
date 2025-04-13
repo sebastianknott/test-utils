@@ -8,15 +8,20 @@ use ReflectionClass;
 use Sebastianknott\TestUtils\SystemUnderTest\MockFactory\MockeryFactory;
 use Sebastianknott\TestUtils\SystemUnderTest\MockFactory\MockTypeEnum;
 use Sebastianknott\TestUtils\SystemUnderTest\MockFactory\PhakeFactory;
+use Sebastianknott\TestUtils\SystemUnderTest\MockFactory\ProphecyFactory;
 
 /**
  * This class is responsible for building a system under test with all its dependencies mocked.
+ *
+ * @api
  */
 class BundleFactory
 {
     /**
      * This method will build a system under test with all its dependencies mocked. You can supply prebuilt
      * parameters for the sut and choose which mock framework to use.
+     *
+     * @api
      *
      * @param class-string<TSut> $className Fully qualified class name of the system under test
      * @param array<non-empty-string,object> $prebuildParameters Prebuilt parameters for the system under test
@@ -39,6 +44,7 @@ class BundleFactory
         $factory = match ($type) {
             MockTypeEnum::MOCKERY => new MockeryFactory(),
             MockTypeEnum::PHAKE => new PhakeFactory(),
+            MockTypeEnum::PROPHECY => new ProphecyFactory(),
         };
 
         $reflection  = new ReflectionClass($className);
@@ -61,10 +67,12 @@ class BundleFactory
             }
 
             $parametersInstancesWithName[$parameterName] = $mockedParameter;
-            $parametersInstances[]                       = $mockedParameter;
+
+            $parametersInstances[] = $type === MockTypeEnum::PROPHECY
+                ? $mockedParameter->reveal()
+                : $mockedParameter;
         }
 
-        /** @var TSut $systemUnderTestSubject */
         $systemUnderTestSubject = new $className(...$parametersInstances);
 
         return new Bundle(

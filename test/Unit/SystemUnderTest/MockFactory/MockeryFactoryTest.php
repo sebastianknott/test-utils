@@ -17,6 +17,7 @@ class MockeryFactoryTest extends TestCase
         $subject = new MockeryFactory();
         $result  = $subject->build(self::class);
 
+        // @phpstan-ignore staticMethod.alreadyNarrowedType
         self::assertInstanceOf(MockInterface::class, $result);
     }
 }

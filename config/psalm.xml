@@ -7,13 +7,14 @@
     xsi:schemaLocation="https://getpsalm.org/schema/config https://raw.githubusercontent.com/vimeo/psalm/main/config.xsd"
 >
     <projectFiles>
-        <directory name="src" />
+        <directory name="src"/>
         <ignoreFiles>
-            <directory name="vendor" />
-            <directory name="vendor/phpunit/phpunit/" />
+            <directory name="vendor"/>
+            <directory name="vendor/phpunit/phpunit/"/>
         </ignoreFiles>
     </projectFiles>
     <plugins>
-        <pluginClass class="Psalm\PhpUnitPlugin\Plugin" />
+        <pluginClass class="Psalm\PhpUnitPlugin\Plugin"/>
+        <pluginClass xmlns="https://getpsalm.org/schema/config" class="Lctrs\PsalmPsrContainerPlugin\Plugin"/>
     </plugins>
 </psalm>

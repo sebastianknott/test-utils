@@ -13,6 +13,7 @@ parameters:
         - ../vendor
     excludePaths:
         - ../.git
-        - ../.idea
         - ../vendor
-    tmpDir: tmp/phpstan
+    tmpDir: ../tmp/phpstan
+    ignoreErrors:
+        - identifier: argument.named

@@ -8,6 +8,7 @@ use Hamcrest\Matcher;
 use Mockery\MockInterface;
 use Phake\IMock;
 use PHPUnit\Framework\Attributes\DataProvider;
+use Prophecy\Prophecy\ObjectProphecy;
 use Sebastianknott\TestUtils\SystemUnderTest\BundleFactory;
 use Sebastianknott\TestUtils\SystemUnderTest\MockFactory\MockTypeEnum;
 use Sebastianknott\TestUtils\Test\Fixture\SystemUnderTest\ClassWithDependencies;
@@ -27,29 +28,40 @@ class BundleFactoryTest extends TestToolsCase
     {
         $result = $this->subject->build(SimpleClass::class);
 
+        // @phpstan-ignore staticMethod.alreadyNarrowedType
         self::assertInstanceOf(SimpleClass::class, $result->getSut());
     }
 
     /**
-     * @return array<string,array<string,string>>
+     * @return array<string,array<string,MockTypeEnum|string>>
      */
     public static function testBuildSutWithMockeryClassWitDepsDataProvider(): array
     {
         return [
             'Mockery' => [
                 'mockClass' => MockInterface::class,
+                'managementClass' => MockInterface::class,
                 'type' => MockTypeEnum::MOCKERY,
             ],
             'Phake' => [
                 'mockClass' => IMock::class,
+                'managementClass' => IMock::class,
                 'type' => MockTypeEnum::PHAKE,
+            ],
+            'Prophecy' => [
+                'mockClass' => SimpleClass::class,
+                'managementClass' => ObjectProphecy::class,
+                'type' => MockTypeEnum::PROPHECY,
             ],
         ];
     }
 
     #[DataProvider('testBuildSutWithMockeryClassWitDepsDataProvider')]
-    public function testBuildSutWithMockeryClassWitDeps(string $mockClass, MockTypeEnum $type): void
-    {
+    public function testBuildSutWithMockeryClassWitDeps(
+        string $mockClass,
+        string $managementClass,
+        MockTypeEnum $type,
+    ): void {
         $result = $this->subject->build(ClassWithDependencies::class, type: $type);
 
         assertThat(
@@ -68,7 +80,7 @@ class BundleFactoryTest extends TestToolsCase
 
         assertThat(
             $result['simpleClassParameterName'],
-            $this->isSimpleClassMock($mockClass),
+            $this->isSimpleClassMock(mockClass: $managementClass),
         );
     }
 
@@ -89,7 +101,6 @@ class BundleFactoryTest extends TestToolsCase
     private function isSimpleClassMock(string $mockClass): Matcher
     {
         return allOf(
-            anInstanceOf(SimpleClass::class),
             anInstanceOf($mockClass),
         );
     }

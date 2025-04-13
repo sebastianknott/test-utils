@@ -8,6 +8,7 @@ use Composer\Autoload\ClassLoader;
 use Faker\Factory;
 use Faker\Generator;
 use Mockery;
+use Override;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use Sebastianknott\TestUtils\SystemUnderTest\BundleFactory;
@@ -29,6 +30,7 @@ class TestToolsCase extends TestCase
      * This method will instantiate the factory and faker. Father more the global functions of hamcrest and mockery
      * will be loaded.
      */
+    #[Override]
     public static function setUpBeforeClass(): void
     {
         self::$factory = new BundleFactory();
@@ -47,6 +49,7 @@ class TestToolsCase extends TestCase
     /**
      * Necessary tearDown functionality for Mockery.
      */
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();

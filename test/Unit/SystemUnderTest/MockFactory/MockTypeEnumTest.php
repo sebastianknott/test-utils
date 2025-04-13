@@ -15,5 +15,6 @@ class MockTypeEnumTest extends TestCase
     {
         $this->assertEquals('PHAKE', MockTypeEnum::PHAKE->value);
         $this->assertEquals('MOCKERY', MockTypeEnum::MOCKERY->value);
+        $this->assertEquals('PROPHECY', MockTypeEnum::PROPHECY->value);
     }
 }

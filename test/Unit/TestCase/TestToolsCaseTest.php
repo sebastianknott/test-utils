@@ -24,8 +24,10 @@ class TestToolsCaseTest extends TestCase
 
     public function testToolsAvailable(): void
     {
+        // @phpstan-ignore staticMethod.alreadyNarrowedType
         self::assertInstanceOf(Generator::class, $this->subject::$faker);
         self::assertSame('velit', $this->subject::$faker->word());
+        // @phpstan-ignore staticMethod.alreadyNarrowedType
         self::assertInstanceOf(BundleFactory::class, $this->subject::$factory);
 
         assertThat(

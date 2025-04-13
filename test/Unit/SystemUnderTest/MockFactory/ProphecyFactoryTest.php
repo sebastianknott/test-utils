@@ -4,22 +4,22 @@ declare(strict_types=1);
 
 namespace Sebastianknott\TestUtils\Test\Unit\SystemUnderTest\MockFactory;
 
-use Phake\IMock;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
-use Sebastianknott\TestUtils\SystemUnderTest\MockFactory\PhakeFactory;
+use Prophecy\Prophecy\ObjectProphecy;
+use Sebastianknott\TestUtils\SystemUnderTest\MockFactory\ProphecyFactory;
 
-class PhakeFactoryTest extends TestCase
+class ProphecyFactoryTest extends TestCase
 {
     #[Test]
     public function buildReturnsMock(): void
     {
-        $subject = new PhakeFactory();
+        $subject = new ProphecyFactory();
         $result  = $subject->build(self::class);
 
         // @phpstan-ignore staticMethod.alreadyNarrowedType
-        self::assertInstanceOf(IMock::class, $result);
+        self::assertInstanceOf(ObjectProphecy::class, $result);
         // @phpstan-ignore staticMethod.alreadyNarrowedType
-        self::assertInstanceOf(self::class, $result);
+        self::assertNotInstanceOf(self::class, $result);
     }
 }
