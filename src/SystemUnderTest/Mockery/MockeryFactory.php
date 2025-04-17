@@ -2,12 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Sebastianknott\TestUtils\SystemUnderTest\MockFactory;
+namespace Sebastianknott\TestUtils\SystemUnderTest\Mockery;
 
 use Mockery;
 use Mockery\LegacyMockInterface;
 use Mockery\MockInterface;
 use Override;
+use Sebastianknott\TestUtils\SystemUnderTest\MockFactory;
 
 /**
  * @internal This class is for internal use only. It will change soon and without announcement
@@ -22,8 +23,13 @@ class MockeryFactory implements MockFactory
      * @phpstan-return LegacyMockInterface&MockInterface&TType
      */
     #[Override]
-    public function build(string $fqcn): MockInterface
+    public function build(string $fqcn): array
     {
-        return Mockery::mock($fqcn);
+        $mock = Mockery::mock($fqcn);
+
+        return [
+            'controlObject' => $mock,
+            'mockObject' => $mock,
+        ];
     }
 }

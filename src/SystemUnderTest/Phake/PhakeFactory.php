@@ -2,11 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Sebastianknott\TestUtils\SystemUnderTest\MockFactory;
+namespace Sebastianknott\TestUtils\SystemUnderTest\Phake;
 
 use Override;
 use Phake;
 use Phake\IMock;
+use Sebastianknott\TestUtils\SystemUnderTest\MockFactory;
 
 /**
  * @internal This class is for internal use only. It will change soon and without announcement
@@ -18,11 +19,16 @@ class PhakeFactory implements MockFactory
      * @phpstan-template TType of object
      * @phpstan-param class-string<TType> $fqcn
      *
-     * @phpstan-return IMock&TType
+     * @phpstan-return array{'controlObject': IMock&TType, 'mockObject': IMock&TType}
      */
     #[Override]
-    public function build(string $fqcn): IMock
+    public function build(string $fqcn): array
     {
-        return Phake::mock($fqcn);
+        $mock = Phake::mock($fqcn);
+
+        return [
+            'controlObject' => $mock,
+            'mockObject' => $mock,
+        ];
     }
 }

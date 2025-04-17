@@ -1,35 +1,27 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Sebastianknott\TestUtils\Test\Functional\SystemUnderTest;
 
-use Hamcrest\Matcher;
 use Mockery\MockInterface;
 use Phake\IMock;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\RunClassInSeparateProcess;
+use PHPUnit\Framework\Attributes\RunInSeparateProcess;
+use PHPUnit\Framework\TestCase;
 use Prophecy\Prophecy\ObjectProphecy;
-use Sebastianknott\TestUtils\SystemUnderTest\BundleFactory;
-use Sebastianknott\TestUtils\SystemUnderTest\MockFactory\MockTypeEnum;
+use Sebastianknott\TestUtils\SystemUnderTest\BundleFacade;
 use Sebastianknott\TestUtils\Test\Fixture\SystemUnderTest\ClassWithDependencies;
 use Sebastianknott\TestUtils\Test\Fixture\SystemUnderTest\SimpleClass;
 use Sebastianknott\TestUtils\TestCase\TestToolsCase;
 
-class BundleFactoryTest extends TestToolsCase
+#[runClassInSeparateProcess]
+class BundleFacadeTest extends TestToolsCase
 {
-    private BundleFactory $subject;
+    private BundleFacade $subject;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
-        $this->subject = new BundleFactory();
-    }
-
-    public function testBuildSutWithMockeryShouldBuildAnInstanceOfSimpleClass(): void
-    {
-        $result = $this->subject->build(SimpleClass::class);
-
-        // @phpstan-ignore staticMethod.alreadyNarrowedType
-        self::assertInstanceOf(SimpleClass::class, $result->getSut());
+        $this->subject = new BundleFacade();
     }
 
     /**
@@ -38,20 +30,25 @@ class BundleFactoryTest extends TestToolsCase
     public static function testBuildSutWithMockeryClassWitDepsDataProvider(): array
     {
         return [
+            'Default is Mockery' => [
+                'mockClass' => MockInterface::class,
+                'managementClass' => MockInterface::class,
+                'buildMethod' => 'build',
+            ],
             'Mockery' => [
                 'mockClass' => MockInterface::class,
                 'managementClass' => MockInterface::class,
-                'type' => MockTypeEnum::MOCKERY,
+                'buildMethod' => 'buildMockeryBundle',
             ],
             'Phake' => [
                 'mockClass' => IMock::class,
                 'managementClass' => IMock::class,
-                'type' => MockTypeEnum::PHAKE,
+                'buildMethod' => 'buildPhakeBundle',
             ],
             'Prophecy' => [
                 'mockClass' => SimpleClass::class,
                 'managementClass' => ObjectProphecy::class,
-                'type' => MockTypeEnum::PROPHECY,
+                'buildMethod' => 'buildProphecyBundle',
             ],
         ];
     }
@@ -60,9 +57,9 @@ class BundleFactoryTest extends TestToolsCase
     public function testBuildSutWithMockeryClassWitDeps(
         string $mockClass,
         string $managementClass,
-        MockTypeEnum $type,
+        string $buildMethod,
     ): void {
-        $result = $this->subject->build(ClassWithDependencies::class, type: $type);
+        $result = $this->subject->$buildMethod(ClassWithDependencies::class);
 
         assertThat(
             $result,
@@ -72,7 +69,7 @@ class BundleFactoryTest extends TestToolsCase
                     anInstanceOf(ClassWithDependencies::class),
                     hasProperty(
                         'simpleClass',
-                        $this->isSimpleClassMock($mockClass),
+                        anInstanceOf($mockClass),
                     ),
                 ),
             ),
@@ -80,28 +77,15 @@ class BundleFactoryTest extends TestToolsCase
 
         assertThat(
             $result['simpleClassParameterName'],
-            $this->isSimpleClassMock(mockClass: $managementClass),
+            anInstanceOf($managementClass),
         );
     }
 
-    public function testPrebuildParametersAreUsedIfGiven(): void
+    public function testBuildProphecyBundleHaveDifferentProphets()
     {
-        $forgedSimpleClass = new SimpleClass();
-        $result            = $this->subject->build(
-            ClassWithDependencies::class,
-            ['simpleClassParameterName' => $forgedSimpleClass],
-        );
+        $bundle1 = $this->subject->buildProphecyBundle(ClassWithDependencies::class);
+        $bundle2 = $this->subject->buildProphecyBundle(ClassWithDependencies::class);
 
-        self::assertSame($forgedSimpleClass, $result['simpleClassParameterName']);
-    }
-
-    /**
-     * Returns Matcher to check if something is a SimpleClass and of type mockClass.
-     */
-    private function isSimpleClassMock(string $mockClass): Matcher
-    {
-        return allOf(
-            anInstanceOf($mockClass),
-        );
+        self::assertNotSame($bundle1, $bundle2);
     }
 }

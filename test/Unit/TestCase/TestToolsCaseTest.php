@@ -7,6 +7,7 @@ namespace Sebastianknott\TestUtils\Test\Unit\TestCase;
 use Faker\Generator;
 use PHPUnit\Framework\TestCase;
 use Safe\DateTime;
+use Sebastianknott\TestUtils\SystemUnderTest\BundleFacade;
 use Sebastianknott\TestUtils\SystemUnderTest\BundleFactory;
 use Sebastianknott\TestUtils\Test\Fixture\SystemUnderTest\ClassWithDependencies;
 use Sebastianknott\TestUtils\Test\Fixture\SystemUnderTest\SimpleClass;
@@ -28,7 +29,7 @@ class TestToolsCaseTest extends TestCase
         self::assertInstanceOf(Generator::class, $this->subject::$faker);
         self::assertSame('velit', $this->subject::$faker->word());
         // @phpstan-ignore staticMethod.alreadyNarrowedType
-        self::assertInstanceOf(BundleFactory::class, $this->subject::$factory);
+        self::assertInstanceOf(BundleFacade::class, $this->subject::$factory);
 
         assertThat(
             new ClassWithDependencies(new SimpleClass()),

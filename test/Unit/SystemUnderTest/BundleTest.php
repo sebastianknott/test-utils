@@ -6,23 +6,26 @@ namespace Sebastianknott\TestUtils\Test\Unit\SystemUnderTest;
 
 use PHPUnit\Framework\TestCase;
 use Sebastianknott\TestUtils\SystemUnderTest\Bundle;
+use Sebastianknott\TestUtils\TestCase\TestToolsCase;
 
-class BundleTest extends TestCase
+class BundleTest extends TestToolsCase
 {
     public function testGetSut(): void
     {
-        $sut    = new class {
+        $sut = new class {
         };
-        $bundle = new Bundle($sut, []);
+        $bundle = new class($sut, []) extends Bundle {
+        };
         self::assertSame($sut, $bundle->getSut());
         self::assertSame($sut, $bundle->sut);
     }
 
     public function testGetParameters(): void
     {
-        $sut    = new class {
+        $sut = new class {
         };
-        $bundle = new Bundle($sut, ['foo' => 'bar']);
+        $bundle = new class($sut, ['foo' => 'bar']) extends Bundle {
+        };
         self::assertSame(['foo' => 'bar'], $bundle->getArrayCopy());
     }
 }
