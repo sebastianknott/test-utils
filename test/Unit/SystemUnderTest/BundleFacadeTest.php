@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sebastianknott\TestUtils\Test\Unit\SystemUnderTest;
 
 use DI\Container;
@@ -7,9 +9,9 @@ use DI\ContainerBuilder;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunInSeparateProcess;
+use PHPUnit\Framework\TestCase;
 use Prophecy\Prophet;
 use Sebastianknott\TestUtils\SystemUnderTest\BundleFacade;
-use PHPUnit\Framework\TestCase;
 use Sebastianknott\TestUtils\SystemUnderTest\BundleFactory;
 use Sebastianknott\TestUtils\SystemUnderTest\Mockery\MockeryBundle;
 use Sebastianknott\TestUtils\SystemUnderTest\Mockery\MockeryBundleFactory;
@@ -24,7 +26,8 @@ use Sebastianknott\TestUtils\Test\Fixture\SystemUnderTest\SimpleClass;
 
 class BundleFacadeTest extends TestCase
 {
-    public static function testBuildDataProvider()
+    /** @return array<string,array<string,string|class-string>> */
+    public static function testBuildDataProvider(): array
     {
         return [
             'Mockery' => [
@@ -50,22 +53,20 @@ class BundleFacadeTest extends TestCase
         string $factoryClass,
         string $bundleFactoryClass,
         string $buildMethod,
-    ) {
-
+    ): void {
         // Constructor Setup
         $mockedContainerBuilder = mock('overload:' . ContainerBuilder::class);
-        $mockedContainer = mock(Container::class);
+        $mockedContainer        = mock(Container::class);
         $mockedContainerBuilder->expects()->build()->andReturn($mockedContainer);
 
         $subject = new BundleFacade();
 
-        $expectedResult = mock($bundleClass);
-        $forgedClassName = SimpleClass::class;
-        $mockedPrebuildParameters = ['simpleClassParameterName' => mock(SimpleClass::class)];
-        $mockedBundleFactory = mock(BundleFactory::class);
-        $mockedMockeryFactory = mock($factoryClass);
+        $expectedResult             = mock($bundleClass);
+        $forgedClassName            = SimpleClass::class;
+        $mockedPrebuildParameters   = ['simpleClassParameterName' => mock(SimpleClass::class)];
+        $mockedBundleFactory        = mock(BundleFactory::class);
+        $mockedMockeryFactory       = mock($factoryClass);
         $mockedMockeryBundleFactory = mock($bundleFactoryClass);
-
 
         $mockedContainer->expects()->get(BundleFactory::class)->andReturn($mockedBundleFactory);
         $mockedContainer->expects()->get($factoryClass)->andReturn($mockedMockeryFactory);
@@ -82,29 +83,29 @@ class BundleFacadeTest extends TestCase
 
     #[runInSeparateProcess]
     #[preserveGlobalState(false)]
-    public function testBuildProphecyBundle()
+    public function testBuildProphecyBundle(): void
     {
-
         // Constructor Setup
         $mockedContainerBuilder = mock('overload:' . ContainerBuilder::class);
-        $mockedContainer = mock(Container::class);
+        $mockedContainer        = mock(Container::class);
         $mockedContainerBuilder->expects()->build()->andReturn($mockedContainer);
 
         $subject = new BundleFacade();
 
-        $expectedResult = mock(ProphecyBundle::class);
-        $forgedClassName = SimpleClass::class;
-        $mockedPrebuildParameters = ['simpleClassParameterName' => mock(SimpleClass::class)];
-        $mockedProphet = mock(Prophet::class);
-        $mockedBundleFactory = mock(BundleFactory::class);
-        $mockedMockeryFactory = mock(ProphecyFactory::class);
+        $expectedResult             = mock(ProphecyBundle::class);
+        $forgedClassName            = SimpleClass::class;
+        $mockedPrebuildParameters   = ['simpleClassParameterName' => mock(SimpleClass::class)];
+        $mockedProphet              = mock(Prophet::class);
+        $mockedBundleFactory        = mock(BundleFactory::class);
+        $mockedMockeryFactory       = mock(ProphecyFactory::class);
         $mockedMockeryBundleFactory = mock(ProphecyBundleFactory::class);
-
 
         $mockedContainer->expects()->get(BundleFactory::class)->andReturn($mockedBundleFactory);
         $mockedContainer->expects()->make(Prophet::class)->andReturn($mockedProphet);
-        $mockedContainer->expects()->make(ProphecyFactory::class, [$mockedProphet])->andReturn($mockedMockeryFactory);
-        $mockedContainer->expects()->make(ProphecyBundleFactory::class, [$mockedProphet])->andReturn($mockedMockeryBundleFactory);
+        $mockedContainer->expects()->make(ProphecyFactory::class, [$mockedProphet])
+            ->andReturn($mockedMockeryFactory);
+        $mockedContainer->expects()->make(ProphecyBundleFactory::class, [$mockedProphet])
+            ->andReturn($mockedMockeryBundleFactory);
 
         $mockedBundleFactory->expects()
             ->build($forgedClassName, $mockedMockeryFactory, $mockedMockeryBundleFactory, $mockedPrebuildParameters)

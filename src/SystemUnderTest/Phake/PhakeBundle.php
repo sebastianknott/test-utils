@@ -1,11 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sebastianknott\TestUtils\SystemUnderTest\Phake;
 
 use Phake\IMock;
 use Sebastianknott\TestUtils\SystemUnderTest\Bundle;
 
 /**
+ * {@inheritDoc}
+ *
  * @api
  *
  * @phpstan-template TKey of non-empty-string

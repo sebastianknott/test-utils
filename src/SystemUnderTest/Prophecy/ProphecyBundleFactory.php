@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sebastianknott\TestUtils\SystemUnderTest\Prophecy;
 
 use Override;
@@ -30,12 +32,12 @@ class ProphecyBundleFactory implements SpecializedBundleFactory
     #[Override]
     public function build(
         object $systemUnderTestSubject,
-        array  $parametersInstancesWithName
+        array $parametersInstancesWithName,
     ): ProphecyBundle {
         return new ProphecyBundle(
             $systemUnderTestSubject,
             $parametersInstancesWithName,
-            $this->prophet
+            $this->prophet,
         );
     }
 }

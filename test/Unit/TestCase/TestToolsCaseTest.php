@@ -8,7 +8,6 @@ use Faker\Generator;
 use PHPUnit\Framework\TestCase;
 use Safe\DateTime;
 use Sebastianknott\TestUtils\SystemUnderTest\BundleFacade;
-use Sebastianknott\TestUtils\SystemUnderTest\BundleFactory;
 use Sebastianknott\TestUtils\Test\Fixture\SystemUnderTest\ClassWithDependencies;
 use Sebastianknott\TestUtils\Test\Fixture\SystemUnderTest\SimpleClass;
 use Sebastianknott\TestUtils\TestCase\TestToolsCase;

@@ -8,6 +8,8 @@ use Mockery\MockInterface;
 use Sebastianknott\TestUtils\SystemUnderTest\Bundle;
 
 /**
+ * {@inheritDoc}
+ *
  * @api
  *
  * @phpstan-template TKey of non-empty-string

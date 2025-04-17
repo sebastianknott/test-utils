@@ -1,27 +1,26 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sebastianknott\TestUtils\Test\Unit\SystemUnderTest\Prophecy;
 
 use Prophecy\Prophet;
-use Sebastianknott\TestUtils\SystemUnderTest\Phake\PhakeBundle;
-use Sebastianknott\TestUtils\SystemUnderTest\Phake\PhakeBundleFactory;
 use Sebastianknott\TestUtils\SystemUnderTest\Prophecy\ProphecyBundle;
 use Sebastianknott\TestUtils\SystemUnderTest\Prophecy\ProphecyBundleFactory;
-use PHPUnit\Framework\TestCase;
 use Sebastianknott\TestUtils\TestCase\TestToolsCase;
 
 class ProphecyBundleFactoryTest extends TestToolsCase
 {
-    public function testBuild()
+    public function testBuild(): void
     {
-        $prophet = new Prophet();
+        $prophet         = new Prophet();
         $prophecyProphet = $prophet->prophesize(Prophet::class);
-        $mockedProphet = $prophecyProphet->reveal();
+        $mockedProphet   = $prophecyProphet->reveal();
 
-        $class = new class {
+        $class   = new class {
         };
         $factory = new ProphecyBundleFactory($mockedProphet);
-        $bundle = $factory->build($class, ['foo' => 'bar']);
+        $bundle  = $factory->build($class, ['foo' => 'bar']);
 
         self::assertSame($class, $bundle->getSut());
         self::assertSame($class, $bundle->sut);

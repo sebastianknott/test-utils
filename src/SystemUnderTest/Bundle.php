@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace Sebastianknott\TestUtils\SystemUnderTest;
 
 use ArrayObject;
-use Sebastianknott\TestUtils\SystemUnderTest\MockFactory\MockTypeEnum;
 
 /**
+ * This class is the base class for all bundles.
+ *
  * @phpstan-template TKey of non-empty-string
  * @phpstan-template TSut of object
  * @phpstan-template TValue
@@ -16,8 +17,9 @@ use Sebastianknott\TestUtils\SystemUnderTest\MockFactory\MockTypeEnum;
 abstract class Bundle extends ArrayObject
 {
     /**
-     * @phpstan-param TSut               $sut
-     * @phpstan-param array<TKey,TValue> $parameters
+     * @phpstan-param TSut $sut This is the public readable property which holds the system under test.
+     * @phpstan-param array<TKey,TValue> $parameters This is the array of parameters which are passed to the
+     *                                               constructor of the system under test.
      */
     public function __construct(
         public readonly object $sut,

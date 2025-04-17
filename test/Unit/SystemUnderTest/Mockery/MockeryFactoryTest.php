@@ -13,20 +13,20 @@ class MockeryFactoryTest extends TestToolsCase
     public function testBuildReturnsMock(): void
     {
         $subject = new MockeryFactory();
-        $result = $subject->build(self::class);
+        $result  = $subject->build(self::class);
 
         assertThat(
             $result,
             allOf(
                 hasKeyValuePair(
                     'controlObject',
-                    allOf(anInstanceOf(MockInterface::class), anInstanceOf(self::class))
+                    allOf(anInstanceOf(MockInterface::class), anInstanceOf(self::class)),
                 ),
                 hasKeyValuePair(
                     'mockObject',
-                    allOf(anInstanceOf(MockInterface::class), anInstanceOf(self::class))
-                )
-            )
+                    allOf(anInstanceOf(MockInterface::class), anInstanceOf(self::class)),
+                ),
+            ),
         );
     }
 }

@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sebastianknott\TestUtils\Test\Unit\SystemUnderTest\Phake;
 
 use Sebastianknott\TestUtils\SystemUnderTest\Bundle;
 use Sebastianknott\TestUtils\SystemUnderTest\Phake\PhakeBundle;
-use PHPUnit\Framework\TestCase;
 use Sebastianknott\TestUtils\TestCase\TestToolsCase;
 
 class PhakeBundleTest extends TestToolsCase

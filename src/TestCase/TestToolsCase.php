@@ -12,7 +12,6 @@ use Override;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use Sebastianknott\TestUtils\SystemUnderTest\BundleFacade;
-use Sebastianknott\TestUtils\SystemUnderTest\BundleFactory;
 
 class TestToolsCase extends TestCase
 {

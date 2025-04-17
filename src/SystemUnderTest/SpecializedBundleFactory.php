@@ -1,8 +1,8 @@
 <?php
 
-namespace Sebastianknott\TestUtils\SystemUnderTest;
+declare(strict_types=1);
 
-use Sebastianknott\TestUtils\SystemUnderTest\Prophecy\ProphecyBundle;
+namespace Sebastianknott\TestUtils\SystemUnderTest;
 
 interface SpecializedBundleFactory
 {
@@ -21,6 +21,6 @@ interface SpecializedBundleFactory
      */
     public function build(
         object $systemUnderTestSubject,
-        array  $parametersInstancesWithName
+        array $parametersInstancesWithName,
     ): Bundle;
 }

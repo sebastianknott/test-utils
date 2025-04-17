@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sebastianknott\TestUtils\Test\Unit\SystemUnderTest\Mockery;
 
 use Sebastianknott\TestUtils\SystemUnderTest\Bundle;

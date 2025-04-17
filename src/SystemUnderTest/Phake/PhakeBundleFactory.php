@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sebastianknott\TestUtils\SystemUnderTest\Phake;
 
-use Mockery\MockInterface;
 use Override;
 use Phake\IMock;
 use Sebastianknott\TestUtils\SystemUnderTest\Bundle;
@@ -26,7 +27,7 @@ class PhakeBundleFactory implements SpecializedBundleFactory
     #[Override]
     public function build(
         object $systemUnderTestSubject,
-        array $parametersInstancesWithName
+        array $parametersInstancesWithName,
     ): PhakeBundle {
         return new PhakeBundle(
             $systemUnderTestSubject,

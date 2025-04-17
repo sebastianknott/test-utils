@@ -22,16 +22,16 @@ class ProphecyFactory implements MockFactory
     /**
      * This method will build a mock object of the given class name. The mock object will be created via Prophecy.
      *
-     * @phpstan-template TType of object
-     * @phpstan-param class-string<TType> $fqcn
+     * @phpstan-template T of object
+     * @phpstan-param class-string<T> $fqcn
      *
-     * @phpstan-return array{'controlObject': ObjectProphecy, 'mockObject': TType}
+     * @phpstan-return array{'controlObject': ObjectProphecy<T>, 'mockObject': T}
      */
     #[Override]
     public function build(string $fqcn): array
     {
         $controlObject = $this->prophet->prophesize($fqcn);
-        $mock = $controlObject->reveal();
+        $mock          = $controlObject->reveal();
         return [
             'controlObject' => $controlObject,
             'mockObject' => $mock,

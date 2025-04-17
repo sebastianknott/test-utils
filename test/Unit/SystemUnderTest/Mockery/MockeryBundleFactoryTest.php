@@ -1,17 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sebastianknott\TestUtils\Test\Unit\SystemUnderTest\Mockery;
 
 use Sebastianknott\TestUtils\SystemUnderTest\Mockery\MockeryBundle;
 use Sebastianknott\TestUtils\SystemUnderTest\Mockery\MockeryBundleFactory;
-use PHPUnit\Framework\TestCase;
 use Sebastianknott\TestUtils\TestCase\TestToolsCase;
 
 class MockeryBundleFactoryTest extends TestToolsCase
 {
-    public function testBuild()
+    public function testBuild(): void
     {
-        $class = new class {
+        $class   = new class {
         };
         $factory = new MockeryBundleFactory();
         $bundle  = $factory->build($class, ['foo' => 'bar']);

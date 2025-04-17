@@ -17,10 +17,14 @@ use Sebastianknott\TestUtils\SystemUnderTest\MockFactory;
 class MockeryFactory implements MockFactory
 {
     /**
-     * @phpstan-template TType of object
-     * @phpstan-param class-string<TType> $fqcn
+     * @phpstan-template T of object
+     * @phpstan-param class-string<T> $fqcn
      *
-     * @phpstan-return LegacyMockInterface&MockInterface&TType
+     * @phpstan-return LegacyMockInterface&MockInterface&T
+     * @phpstan-return array{
+     *                  'controlObject':LegacyMockInterface&MockInterface&T,
+     *                  'mockObject':LegacyMockInterface&MockInterface&T
+     *                 }
      */
     #[Override]
     public function build(string $fqcn): array

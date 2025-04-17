@@ -10,7 +10,6 @@ use Mockery;
 use Phake\IMock;
 use Prophecy\Prophecy\ObjectProphecy;
 use Prophecy\Prophet;
-use Psr\Container\ContainerInterface;
 use Sebastianknott\TestUtils\SystemUnderTest\Mockery\MockeryBundle;
 use Sebastianknott\TestUtils\SystemUnderTest\Mockery\MockeryBundleFactory;
 use Sebastianknott\TestUtils\SystemUnderTest\Mockery\MockeryFactory;
@@ -51,13 +50,13 @@ class BundleFacade
      * @phpstan-param class-string<TSut> $className
      * @phpstan-param array<non-empty-string,object> $prebuildParameters
      *
-     * @phpstan-return MockeryBundle<non-empty-string,TSut,object>
+     * @phpstan-return MockeryBundle<non-empty-string,TSut>
      * @api
      *
      */
     public function build(
         string $className,
-        array  $prebuildParameters = [],
+        array $prebuildParameters = [],
     ): MockeryBundle {
         return $this->buildMockeryBundle($className, $prebuildParameters);
     }
@@ -76,17 +75,18 @@ class BundleFacade
      * @phpstan-param class-string<TSut> $className
      * @phpstan-param array<non-empty-string,object> $prebuildParameters
      *
-     * @phpstan-return MockeryBundle<non-empty-string,TSut,object>
+     * @phpstan-return MockeryBundle<non-empty-string,TSut>
+     *
      * @api
      *
      */
     public function buildMockeryBundle(
         string $className,
-        array  $prebuildParameters = [],
+        array $prebuildParameters = [],
     ): MockeryBundle {
         $factory = $this->container->get(BundleFactory::class);
         /** @var MockFactory<Mockery> $mockFactory */
-        $mockFactory = $this->container->get(MockeryFactory::class);
+        $mockFactory   = $this->container->get(MockeryFactory::class);
         $bundleFactory = $this->container->get(MockeryBundleFactory::class);
         return $factory->build($className, $mockFactory, $bundleFactory, $prebuildParameters);
     }
@@ -105,17 +105,17 @@ class BundleFacade
      * @phpstan-param class-string<TSut> $className
      * @phpstan-param array<non-empty-string,object> $prebuildParameters
      *
-     * @phpstan-return PhakeBundle<non-empty-string,TSut,object>
+     * @phpstan-return PhakeBundle<non-empty-string,TSut>
      * @api
      *
      */
     public function buildPhakeBundle(
         string $className,
-        array  $prebuildParameters = [],
+        array $prebuildParameters = [],
     ): PhakeBundle {
         $factory = $this->container->get(BundleFactory::class);
         /** @var MockFactory<IMock> $mockFactory */
-        $mockFactory = $this->container->get(PhakeFactory::class);
+        $mockFactory   = $this->container->get(PhakeFactory::class);
         $bundleFactory = $this->container->get(PhakeBundleFactory::class);
         return $factory->build($className, $mockFactory, $bundleFactory, $prebuildParameters);
     }
@@ -134,18 +134,18 @@ class BundleFacade
      * @phpstan-param class-string<TSut> $className
      * @phpstan-param array<non-empty-string,object> $prebuildParameters
      *
-     * @phpstan-return ProphecyBundle<non-empty-string,TSut,object>
+     * @phpstan-return ProphecyBundle<non-empty-string,TSut>
      * @api
      *
      */
     public function buildProphecyBundle(
         string $className,
-        array  $prebuildParameters = [],
+        array $prebuildParameters = [],
     ): ProphecyBundle {
         $factory = $this->container->get(BundleFactory::class);
         $prophet = $this->container->make(Prophet::class);
-        /** @var MockFactory<ObjectProphecy> $mockFactory */
-        $mockFactory = $this->container->make(ProphecyFactory::class, [$prophet]);
+        /** @var MockFactory<ObjectProphecy<object>> $mockFactory */
+        $mockFactory   = $this->container->make(ProphecyFactory::class, [$prophet]);
         $bundleFactory = $this->container->make(ProphecyBundleFactory::class, [$prophet]);
         return $factory->build($className, $mockFactory, $bundleFactory, $prebuildParameters);
     }

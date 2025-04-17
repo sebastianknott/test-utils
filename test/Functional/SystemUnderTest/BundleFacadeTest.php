@@ -1,13 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sebastianknott\TestUtils\Test\Functional\SystemUnderTest;
 
 use Mockery\MockInterface;
 use Phake\IMock;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\RunClassInSeparateProcess;
-use PHPUnit\Framework\Attributes\RunInSeparateProcess;
-use PHPUnit\Framework\TestCase;
 use Prophecy\Prophecy\ObjectProphecy;
 use Sebastianknott\TestUtils\SystemUnderTest\BundleFacade;
 use Sebastianknott\TestUtils\Test\Fixture\SystemUnderTest\ClassWithDependencies;
@@ -81,7 +81,7 @@ class BundleFacadeTest extends TestToolsCase
         );
     }
 
-    public function testBuildProphecyBundleHaveDifferentProphets()
+    public function testBuildProphecyBundleHaveDifferentProphets(): void
     {
         $bundle1 = $this->subject->buildProphecyBundle(ClassWithDependencies::class);
         $bundle2 = $this->subject->buildProphecyBundle(ClassWithDependencies::class);
