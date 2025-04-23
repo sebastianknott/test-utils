@@ -14,7 +14,7 @@
         "infection/infection": ">=0.29.14",
         "phpspec/prophecy": "^v1.20.0",
         "brianium/paratest": "^v7.8.3",
-        "php-di/php-di": "6|7"
+        "php-di/php-di": "6.*|7.*"
     },
     "require-dev": {
         "sebastianknott/coding-standard": "^2.2.2",
