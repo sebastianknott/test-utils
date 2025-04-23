@@ -13,7 +13,8 @@
         "fakerphp/faker": "^v1.23.1",
         "infection/infection": ">=0.29.14",
         "phpspec/prophecy": "^v1.20.0",
-        "brianium/paratest": "^v7.8.3"
+        "brianium/paratest": "^v7.8.3",
+        "php-di/php-di": "6|7"
     },
     "require-dev": {
         "sebastianknott/coding-standard": "^2.2.2",
@@ -30,7 +31,10 @@
     "autoload-dev": {
         "psr-4": {
             "Sebastianknott\\TestUtils\\Test\\": "test/"
-        }
+        },
+        "files": [
+            "vendor/mockery/mockery/library/helpers.php"
+        ]
     },
     "authors": [
         {

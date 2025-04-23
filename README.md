@@ -10,7 +10,6 @@ SUT and mocks its constructor dependencies as good as it can.
 It returns a `Bundle` object that contains the SUT and the mocks.
 
 ```php
-
 class SomeClass
 {
     public function __construct(Dependency $myDependency)
@@ -26,22 +25,24 @@ class Dependency{
     }
 }
 
-$factory = new BundleFactory();
-$bundel = $factory->build(SomeClass::class);
+$facade = new BundleFacade();
+$bundle = $facade->build(SomeClass::class);
 
 // Get the SUT
 $sut = $bundle->sut;
-// Access the mocked dependencies
+// Access the mocked dependencies by parameter name
 $bundle['myDependency']->expects()->someMethod()->once();
 ```
 ### Type of Mocks
 It supports multiple types of mocking libraries ([Mockery](https://github.com/mockery/mockery),
-[Phake](https://github.com/phake/phake), [Prophecy](https://github.com/phpspec/prophecy)) and can be configured to use one of them by passing the respective
-`MockTypeEnum` to `BundleFactory::build`.
+[Phake](https://github.com/phake/phake), [Prophecy](https://github.com/phpspec/prophecy)). Just use the provided build method. The default mocking library is Mockery.
 
 ```php
 [...]
-$bundel = $factory->build(SomeClass::class, type: MockTypeEnum::MOCKERY);
+$factory->build(SomeClass::class); // Returns MockeryBundle
+$factory->buildMockeryBundle(SomeClass::class); // Returns MockeryBundle
+$factory->buildPhakeBundle(SomeClass::class); // Returns PhakeBundle
+$factory->buildProphecyBundle(SomeClass::class); // Returns ProphecyBundle
 [...]
 ```
 

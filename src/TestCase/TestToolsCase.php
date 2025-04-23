@@ -11,7 +11,7 @@ use Mockery;
 use Override;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
-use Sebastianknott\TestUtils\SystemUnderTest\BundleFactory;
+use Sebastianknott\TestUtils\SystemUnderTest\BundleFacade;
 
 class TestToolsCase extends TestCase
 {
@@ -24,7 +24,7 @@ class TestToolsCase extends TestCase
     /**
      * An instance of my subject factory for easy sut creation and mocking.
      */
-    public static BundleFactory $factory;
+    public static BundleFacade $factory;
 
     /**
      * This method will instantiate the factory and faker. Father more the global functions of hamcrest and mockery
@@ -33,7 +33,7 @@ class TestToolsCase extends TestCase
     #[Override]
     public static function setUpBeforeClass(): void
     {
-        self::$factory = new BundleFactory();
+        self::$factory = new BundleFacade();
 
         self::$faker = Factory::create('de_DE');
         self::$faker->seed(9876543255);
