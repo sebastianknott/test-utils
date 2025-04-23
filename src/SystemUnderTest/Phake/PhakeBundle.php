@@ -14,7 +14,7 @@ use Sebastianknott\TestUtils\SystemUnderTest\Bundle;
  *
  * @phpstan-template TKey of non-empty-string
  * @phpstan-template TSut of object
- * @phpstan-extends Bundle<TKey,TSut,IMock>
+ * @phpstan-extends Bundle<TKey,TSut,IMock|mixed>
  */
 class PhakeBundle extends Bundle
 {

@@ -6,9 +6,12 @@ namespace Sebastianknott\TestUtils\SystemUnderTest\Phake;
 
 use Override;
 use Phake\IMock;
-use Sebastianknott\TestUtils\SystemUnderTest\Bundle;
 use Sebastianknott\TestUtils\SystemUnderTest\SpecializedBundleFactory;
 
+/**
+ * @phpstan-template TValue of IMock
+ * @phpstan-implements SpecializedBundleFactory<TValue>
+ */
 class PhakeBundleFactory implements SpecializedBundleFactory
 {
     /**
@@ -18,11 +21,10 @@ class PhakeBundleFactory implements SpecializedBundleFactory
      * @param array<string,object> $parametersInstancesWithName
      *
      * @phpstan-template TSut of object
-     *
      * @phpstan-param TSut $systemUnderTestSubject
      * @phpstan-param array<non-empty-string,mixed> $parametersInstancesWithName
      *
-     * @phpstan-return Bundle<non-empty-string,TSut,IMock>
+     * @phpstan-return PhakeBundle<non-empty-string,TSut>
      */
     #[Override]
     public function build(

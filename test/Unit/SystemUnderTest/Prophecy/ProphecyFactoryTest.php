@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Sebastianknott\TestUtils\Test\Unit\SystemUnderTest\Prophecy;
 
+use Mockery\LegacyMockInterface;
+use Mockery\MockInterface;
 use Prophecy\Prophecy\ObjectProphecy;
 use Prophecy\Prophet;
 use Sebastianknott\TestUtils\SystemUnderTest\Prophecy\ProphecyFactory;
@@ -13,12 +15,13 @@ class ProphecyFactoryTest extends TestToolsCase
 {
     public function testBuildReturnsMock(): void
     {
+        /** @var Prophet&(MockInterface&object&LegacyMockInterface) $mockedProphet */
         $mockedProphet   = mock(Prophet::class);
-        $prophecizedSelf = mock(ObjectProphecy::class);
+        $prophesizedSelf = mock(ObjectProphecy::class);
         $mockedSelf      = mock(self::class);
 
-        $mockedProphet->expects()->prophesize(self::class)->andReturn($prophecizedSelf);
-        $prophecizedSelf->expects()->reveal()->andReturn($mockedSelf);
+        $mockedProphet->expects()->prophesize(self::class)->andReturn($prophesizedSelf);
+        $prophesizedSelf->expects()->reveal()->andReturn($mockedSelf);
 
         $subject = new ProphecyFactory($mockedProphet);
         $result  = $subject->build(self::class);

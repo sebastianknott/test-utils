@@ -17,3 +17,5 @@ parameters:
     tmpDir: ../tmp/phpstan
     ignoreErrors:
         - identifier: argument.named
+        - '#Call to an undefined method Mockery\\ExpectationInterface\|Mockery\\ExpectsHigherOrderMessage#'
+        - '#Call to static method PHPUnit\\Framework\\Assert\:\:assertSame\(\) with .* and array<non-empty-string, Mockery\\MockInterface> will always evaluate to false#'

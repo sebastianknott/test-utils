@@ -7,9 +7,12 @@ namespace Sebastianknott\TestUtils\SystemUnderTest\Prophecy;
 use Override;
 use Prophecy\Prophecy\ObjectProphecy;
 use Prophecy\Prophet;
-use Sebastianknott\TestUtils\SystemUnderTest\Bundle;
 use Sebastianknott\TestUtils\SystemUnderTest\SpecializedBundleFactory;
 
+/**
+ * @phpstan-template TValue of ObjectProphecy<object>
+ * @phpstan-implements SpecializedBundleFactory<TValue>
+ */
 class ProphecyBundleFactory implements SpecializedBundleFactory
 {
     public function __construct(private readonly Prophet $prophet)
@@ -23,11 +26,10 @@ class ProphecyBundleFactory implements SpecializedBundleFactory
      * @param array<string,object> $parametersInstancesWithName
      *
      * @phpstan-template TSut of object
-     *
      * @phpstan-param TSut $systemUnderTestSubject
      * @phpstan-param array<non-empty-string,mixed> $parametersInstancesWithName
      *
-     * @phpstan-return Bundle<non-empty-string,TSut,ObjectProphecy>
+     * @phpstan-return ProphecyBundle<non-empty-string,TSut>
      */
     #[Override]
     public function build(

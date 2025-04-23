@@ -25,6 +25,7 @@ class ProphecyBundleFactoryTest extends TestToolsCase
         self::assertSame($class, $bundle->getSut());
         self::assertSame($class, $bundle->sut);
         self::assertSame(['foo' => 'bar'], $bundle->getArrayCopy());
+        // @phpstan-ignore staticMethod.alreadyNarrowedType
         self::assertInstanceOf(ProphecyBundle::class, $bundle);
         self::assertSame($bundle->prophet, $mockedProphet);
     }

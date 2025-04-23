@@ -14,7 +14,7 @@ use Sebastianknott\TestUtils\SystemUnderTest\Bundle;
  *
  * @phpstan-template TKey of non-empty-string
  * @phpstan-template TSut of object
- * @phpstan-extends Bundle<TKey,TSut,MockInterface>
+ * @phpstan-extends Bundle<TKey,TSut,MockInterface|mixed>
  */
 class MockeryBundle extends Bundle
 {

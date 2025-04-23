@@ -25,6 +25,7 @@ class BundleFactory
      *
      * @phpstan-param class-string<TSut> $className
      * @phpstan-param MockFactory<object> $factory
+     * @phpstan-param SpecializedBundleFactory<object> $specializedBundleFactory
      *
      * @phpstan-return Bundle<non-empty-string,TSut,object>
      *

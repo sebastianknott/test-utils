@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Sebastianknott\TestUtils\SystemUnderTest;
 
+/**
+ * @phpstan-template TValue of object
+ */
 interface SpecializedBundleFactory
 {
     /**
@@ -17,7 +20,7 @@ interface SpecializedBundleFactory
      * @phpstan-param TSut $systemUnderTestSubject
      * @phpstan-param array<non-empty-string,mixed> $parametersInstancesWithName
      *
-     * @phpstan-return Bundle<non-empty-string,TSut,object>
+     * @phpstan-return Bundle<non-empty-string,TSut,TValue|mixed>
      */
     public function build(
         object $systemUnderTestSubject,

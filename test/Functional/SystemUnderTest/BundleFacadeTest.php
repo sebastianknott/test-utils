@@ -25,7 +25,7 @@ class BundleFacadeTest extends TestToolsCase
     }
 
     /**
-     * @return array<string,array<string,MockTypeEnum|string>>
+     * @return array<string,array<string,string>>
      */
     public static function testBuildSutWithMockeryClassWitDepsDataProvider(): array
     {

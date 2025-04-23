@@ -6,7 +6,7 @@ namespace Sebastianknott\TestUtils\SystemUnderTest;
 
 /**
  * @internal This class is for internal use only. It will change soon and without announcement
- * @phpstan-template TType of object the type of mock to be used
+ * @phpstan-template-covariant TType of object the type of mock to be used
  */
 interface MockFactory
 {

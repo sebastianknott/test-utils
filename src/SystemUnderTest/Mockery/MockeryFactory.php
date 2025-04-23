@@ -20,7 +20,6 @@ class MockeryFactory implements MockFactory
      * @phpstan-template T of object
      * @phpstan-param class-string<T> $fqcn
      *
-     * @phpstan-return LegacyMockInterface&MockInterface&T
      * @phpstan-return array{
      *                  'controlObject':LegacyMockInterface&MockInterface&T,
      *                  'mockObject':LegacyMockInterface&MockInterface&T

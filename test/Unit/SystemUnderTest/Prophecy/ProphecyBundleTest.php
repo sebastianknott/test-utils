@@ -19,6 +19,7 @@ class ProphecyBundleTest extends TestToolsCase
         $bundle  = new ProphecyBundle($sut, [], $prophet);
 
         self::assertSame($prophet, $bundle->prophet);
+        // @phpstan-ignore staticMethod.alreadyNarrowedType
         self::assertInstanceOf(Bundle::class, $bundle);
     }
 }

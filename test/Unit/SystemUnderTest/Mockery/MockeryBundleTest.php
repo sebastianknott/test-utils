@@ -15,6 +15,7 @@ class MockeryBundleTest extends TestToolsCase
         $sut    = new class {
         };
         $bundle = new MockeryBundle($sut, []);
+        // @phpstan-ignore staticMethod.alreadyNarrowedType
         self::assertInstanceOf(Bundle::class, $bundle);
     }
 }

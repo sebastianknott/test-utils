@@ -15,6 +15,7 @@ class PhakeBundleTest extends TestToolsCase
         $sut    = new class {
         };
         $bundle = new PhakeBundle($sut, []);
+        // @phpstan-ignore staticMethod.alreadyNarrowedType
         self::assertInstanceOf(Bundle::class, $bundle);
     }
 }

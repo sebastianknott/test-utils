@@ -19,7 +19,9 @@ class MockeryBundleFactoryTest extends TestToolsCase
 
         self::assertSame($class, $bundle->getSut());
         self::assertSame($class, $bundle->sut);
+        // @phpstan-igonre-next-line
         self::assertSame(['foo' => 'bar'], $bundle->getArrayCopy());
+        // @phpstan-ignore staticMethod.alreadyNarrowedType
         self::assertInstanceOf(MockeryBundle::class, $bundle);
     }
 }

@@ -20,6 +20,7 @@ class PhakeBundleFactoryTest extends TestToolsCase
         self::assertSame($class, $bundle->getSut());
         self::assertSame($class, $bundle->sut);
         self::assertSame(['foo' => 'bar'], $bundle->getArrayCopy());
+        // @phpstan-ignore staticMethod.alreadyNarrowedType
         self::assertInstanceOf(PhakeBundle::class, $bundle);
     }
 }

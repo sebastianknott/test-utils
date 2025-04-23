@@ -4,9 +4,14 @@ declare(strict_types=1);
 
 namespace Sebastianknott\TestUtils\SystemUnderTest\Mockery;
 
+use Mockery\MockInterface;
 use Override;
 use Sebastianknott\TestUtils\SystemUnderTest\SpecializedBundleFactory;
 
+/**
+ * @phpstan-template TValue of MockInterface
+ * @phpstan-implements SpecializedBundleFactory<TValue>
+ */
 class MockeryBundleFactory implements SpecializedBundleFactory
 {
     /**
@@ -16,7 +21,6 @@ class MockeryBundleFactory implements SpecializedBundleFactory
      * @param array<string,object> $parametersInstancesWithName
      *
      * @phpstan-template TSut of object
-     *
      * @phpstan-param TSut $systemUnderTestSubject
      * @phpstan-param array<non-empty-string,mixed> $parametersInstancesWithName
      *
