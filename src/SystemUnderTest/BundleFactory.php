@@ -15,20 +15,17 @@ class BundleFactory
      * This method will build a system under test with all its dependencies mocked. You can supply prebuilt
      * parameters for the sut and choose which mock framework to use.
      *
-     * @phpstan-template TSut of object The type of the System Under Test
-     *
      * @param string $className Fully qualified class name of the system under test
      * @param array<non-empty-string,object> $prebuildParameters Prebuilt parameters for the system under test
      *                                                           it has to be an associative array with the parameter
      *                                                           name of the sut constructor as key and the prebuilt
      *                                                           parameter as value.
      *
+     * @phpstan-template TSut of object The type of the System Under Test
      * @phpstan-param class-string<TSut> $className
      * @phpstan-param MockFactory<object> $factory
      * @phpstan-param SpecializedBundleFactory<object> $specializedBundleFactory
-     *
      * @phpstan-return Bundle<non-empty-string,TSut,object>
-     *
      * @api
      */
     public function build(
@@ -46,6 +43,7 @@ class BundleFactory
 
         $controlObjects      = [];
         $parametersInstances = [];
+
         foreach ($parameters ?? [] as $parameter) {
             /** @var class-string<object> $parameterClass */
             $parameterClass = $parameter->getType();

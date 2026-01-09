@@ -1,7 +1,7 @@
 {
     "timeout": 20,
-    "minMsi": 93,
-    "minCoveredMsi": 93,
+    "minMsi": 100,
+    "minCoveredMsi": 100,
     "source": {
         "directories": [
             "src"

@@ -24,7 +24,6 @@ class ProphecyFactory implements MockFactory
      *
      * @phpstan-template T of object
      * @phpstan-param class-string<T> $fqcn
-     *
      * @phpstan-return array{'controlObject': ObjectProphecy<T>, 'mockObject': T}
      */
     #[Override]

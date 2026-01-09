@@ -27,7 +27,7 @@ use Sebastianknott\TestUtils\Test\Fixture\SystemUnderTest\SimpleClass;
 class BundleFacadeTest extends TestCase
 {
     /** @return array<string,array<string,string|class-string>> */
-    public static function testBuildDataProvider(): array
+    public static function buildDataProvider(): array
     {
         return [
             'Mockery' => [
@@ -45,9 +45,9 @@ class BundleFacadeTest extends TestCase
         ];
     }
 
-    #[runInSeparateProcess]
-    #[preserveGlobalState(false)]
-    #[DataProvider('testBuildDataProvider')]
+    #[RunInSeparateProcess]
+    #[PreserveGlobalState(false)]
+    #[DataProvider('buildDataProvider')]
     public function testBuild(
         string $bundleClass,
         string $factoryClass,
@@ -70,10 +70,17 @@ class BundleFacadeTest extends TestCase
 
         $mockedContainer->expects()->get(BundleFactory::class)->andReturn($mockedBundleFactory);
         $mockedContainer->expects()->get($factoryClass)->andReturn($mockedMockeryFactory);
-        $mockedContainer->expects()->get($bundleFactoryClass)->andReturn($mockedMockeryBundleFactory);
+        $mockedContainer->expects()->get($bundleFactoryClass)->andReturn(
+            $mockedMockeryBundleFactory,
+        );
 
         $mockedBundleFactory->expects()
-            ->build($forgedClassName, $mockedMockeryFactory, $mockedMockeryBundleFactory, $mockedPrebuildParameters)
+            ->build(
+                $forgedClassName,
+                $mockedMockeryFactory,
+                $mockedMockeryBundleFactory,
+                $mockedPrebuildParameters,
+            )
             ->andReturn($expectedResult);
 
         $result = $subject->$buildMethod($forgedClassName, $mockedPrebuildParameters);
@@ -81,8 +88,8 @@ class BundleFacadeTest extends TestCase
         self::assertSame($expectedResult, $result);
     }
 
-    #[runInSeparateProcess]
-    #[preserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    #[PreserveGlobalState(false)]
     public function testBuildProphecyBundle(): void
     {
         // Constructor Setup
@@ -108,7 +115,12 @@ class BundleFacadeTest extends TestCase
             ->andReturn($mockedMockeryBundleFactory);
 
         $mockedBundleFactory->expects()
-            ->build($forgedClassName, $mockedMockeryFactory, $mockedMockeryBundleFactory, $mockedPrebuildParameters)
+            ->build(
+                $forgedClassName,
+                $mockedMockeryFactory,
+                $mockedMockeryBundleFactory,
+                $mockedPrebuildParameters,
+            )
             ->andReturn($expectedResult);
 
         $result = $subject->buildProphecyBundle($forgedClassName, $mockedPrebuildParameters);

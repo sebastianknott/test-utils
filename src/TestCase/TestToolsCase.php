@@ -20,10 +20,13 @@ class TestToolsCase extends TestCase
     /**
      * A ready-made faker instance for your unit tests.
      */
+    // phpcs:ignore SlevomatCodingStandard.Classes.ForbiddenPublicProperty.ForbiddenPublicProperty
     public static Generator $faker;
+
     /**
      * An instance of my subject factory for easy sut creation and mocking.
      */
+    // phpcs:ignore SlevomatCodingStandard.Classes.ForbiddenPublicProperty.ForbiddenPublicProperty
     public static BundleFacade $factory;
 
     /**
@@ -48,11 +51,14 @@ class TestToolsCase extends TestCase
 
     /**
      * Necessary tearDown functionality for Mockery.
+     *
+     * @infection-ignore-all
      */
     #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();
+
         Mockery::close();
     }
 }
