@@ -18,7 +18,6 @@ class PhakeFactory implements MockFactory
     /**
      * @phpstan-template T of object
      * @phpstan-param class-string<T> $fqcn
-     *
      * @phpstan-return array{'controlObject':IMock&T, 'mockObject': IMock&T}
      */
     #[Override]

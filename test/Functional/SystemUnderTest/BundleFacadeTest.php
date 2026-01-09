@@ -14,7 +14,7 @@ use Sebastianknott\TestUtils\Test\Fixture\SystemUnderTest\ClassWithDependencies;
 use Sebastianknott\TestUtils\Test\Fixture\SystemUnderTest\SimpleClass;
 use Sebastianknott\TestUtils\TestCase\TestToolsCase;
 
-#[runClassInSeparateProcess]
+#[RunClassInSeparateProcess]
 class BundleFacadeTest extends TestToolsCase
 {
     private BundleFacade $subject;
@@ -27,7 +27,7 @@ class BundleFacadeTest extends TestToolsCase
     /**
      * @return array<string,array<string,string>>
      */
-    public static function testBuildSutWithMockeryClassWitDepsDataProvider(): array
+    public static function buildSutWithMockeryClassWitDepsDataProvider(): array
     {
         return [
             'Default is Mockery' => [
@@ -53,7 +53,7 @@ class BundleFacadeTest extends TestToolsCase
         ];
     }
 
-    #[DataProvider('testBuildSutWithMockeryClassWitDepsDataProvider')]
+    #[DataProvider('buildSutWithMockeryClassWitDepsDataProvider')]
     public function testBuildSutWithMockeryClassWitDeps(
         string $mockClass,
         string $managementClass,

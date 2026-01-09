@@ -52,7 +52,6 @@ class BundleFacade
      *
      * @phpstan-return MockeryBundle<non-empty-string,TSut>
      * @api
-     *
      */
     public function build(
         string $className,
@@ -78,7 +77,6 @@ class BundleFacade
      * @phpstan-return MockeryBundle<non-empty-string,TSut>
      *
      * @api
-     *
      */
     public function buildMockeryBundle(
         string $className,
@@ -107,7 +105,6 @@ class BundleFacade
      *
      * @phpstan-return PhakeBundle<non-empty-string,TSut>
      * @api
-     *
      */
     public function buildPhakeBundle(
         string $className,
@@ -136,7 +133,6 @@ class BundleFacade
      *
      * @phpstan-return ProphecyBundle<non-empty-string,TSut>
      * @api
-     *
      */
     public function buildProphecyBundle(
         string $className,

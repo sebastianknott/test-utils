@@ -10,7 +10,6 @@ class ClassWithDependencies
 
     /**
      * ClassWithDependencies constructor.
-     *
      */
     public function __construct(SimpleClass $simpleClassParameterName)
     {

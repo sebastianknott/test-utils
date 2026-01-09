@@ -12,7 +12,6 @@ use Sebastianknott\TestUtils\SystemUnderTest\Bundle;
  * {@inheritDoc}
  *
  * @api
- *
  * @phpstan-template TKey of non-empty-string
  * @phpstan-template TSut of object
  * @phpstan-extends Bundle<TKey,TSut,ObjectProphecy<object>|mixed>

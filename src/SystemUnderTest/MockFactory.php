@@ -16,7 +16,6 @@ interface MockFactory
      *
      * @phpstan-template T of object The Type of the class to mock
      * @phpstan-param class-string<T> $fqcn
-     *
      * @phpstan-return array{'controlObject': object, 'mockObject': T}
      */
     public function build(string $fqcn): array;

@@ -21,17 +21,14 @@ abstract class Bundle extends ArrayObject
      * @phpstan-param array<TKey,TValue> $parameters This is the array of parameters which are passed to the
      *                                               constructor of the system under test.
      */
-    public function __construct(
-        public readonly object $sut,
-        array $parameters,
-    ) {
+    public function __construct(public readonly object $sut, array $parameters)
+    {
         parent::__construct($parameters);
     }
 
     /**
      * @deprecated Use the public property $sut instead.
      * @api
-     *
      * @phpstan-return TSut
      */
     public function getSut(): object
